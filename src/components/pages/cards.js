@@ -51,19 +51,25 @@ function GetCards(){
         <>
             <h1>КАТАЛОГ ВИДЕОКАРТ</h1>
             <h3>Поиск</h3>
+            <input
+                type="text"
+                placeholder="Найти по..."
+                onChange={(e) => setSearchTitle(e.target.value)}
+            />
+            {loading ? (<h4>Загружаем...</h4>):(
+                (cards.filter((value) =>{
+                    if(searchTitle === ""){
+                        return value
+                    }
+                    else if (value.brand.toLowerCase().includes(searchTitle.toLowerCase())) {
+                        return value
+                    }
+                    else if (value.line.toLowerCase().includes(searchTitle.toLowerCase())) {
+                        return value
+                    }
+                }).map(renderCard))
+            )}
 
-
-
-            <div className="MyComponent">
-                <div className="wrapper">
-                    <div className="cards">
-                        {cards.slice(0, visible).map(renderCard)}
-                    </div>
-                </div>
-                {visible < cards.length && (
-                    <button onClick={loadMore}>Загрузить еще</button>
-                )}
-            </div>
         </>
     );
 }
